@@ -13,4 +13,6 @@ ENV HOME=/tmp
 
 COPY --from=minio/mc:latest /usr/bin/mc /usr/bin/mc
 
+RUN dnf-3 install -y python36 && dnf clean all
+
 ENTRYPOINT ["mc"]
