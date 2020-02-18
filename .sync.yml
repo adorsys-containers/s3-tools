@@ -1,0 +1,5 @@
+.github/workflows/ci.yaml:
+  env:
+    - DOCKER_IMAGE: adorsys/s3-tools
+      TAG: latest
+      DIR: .
