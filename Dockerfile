@@ -18,7 +18,13 @@ ENV PAGER="more" HOME=/tmp
 
 COPY --from=minio/mc:latest /usr/bin/mc /usr/bin/mc
 
+COPY patches /tmp/patches/
+
 # Install util-linux for commands like mountpoint
-RUN microdnf install -y curl util-linux findutils python3 python3-pip \
+RUN microdnf install -y curl util-linux findutils python3 python3-pip patch \
+  && pip3 --disable-pip-version-check install -U --compile --no-cache-dir awscli s3cmd \
+# FIX https://github.com/s3tools/s3cmd/pull/1014
+  && patch -d /usr/local/lib/python3.6/site-packages/ -p1 < /tmp/patches/1014.patch \
+  && microdnf remove patch \
   && microdnf clean all \
-  && pip3 --disable-pip-version-check install -U --compile --no-cache-dir awscli s3cmd
+  && rm -rf /tmp/patches/

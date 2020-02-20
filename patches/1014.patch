@@ -1,0 +1,24 @@
+From 6a4390777f2c2178e80e744b289466f476fa0247 Mon Sep 17 00:00:00 2001
+From: Ryan Huddleston <rhuddleston@Ryans-MacBook-Pro.local>
+Date: Sat, 3 Nov 2018 23:53:00 -0600
+Subject: [PATCH] With this commit 4 years ago OSError was caught:
+ https://github.com/s3tools/s3cmd/commit/889c5a7ba1ef8fc48f0c1be593e7ddf1e518a408
+
+Looks like there wasn't a good reason to include it give the comment. Also now with python 3 http.client.RemoteDisconnected is getting caught by OSError.
+---
+ S3/S3.py | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/S3/S3.py b/S3/S3.py
+index a070da77..0f379c83 100644
+--- a/S3/S3.py
++++ b/S3/S3.py
+@@ -1660,8 +1660,6 @@ def recv_file(self, request, stream, labels, start_position = 0, retries = _max_
+             debug("Response:\n" + pprint.pformat(response))
+         except ParameterError as e:
+             raise
+-        except OSError as e:
+-            raise
+         except (IOError, Exception) as e:
+             if self.config.progress_meter:
+                 progress.done("failed")
