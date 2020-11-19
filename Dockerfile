@@ -19,6 +19,6 @@ ENV PAGER="more" HOME=/tmp
 COPY --from=minio/mc:latest /usr/bin/mc /usr/bin/mc
 
 # Install util-linux for commands like mountpoint
-RUN microdnf install -y curl util-linux findutils python3 python3-pip \
+RUN microdnf install -y procps-ng curl util-linux findutils python3 python3-pip \
   && microdnf clean all \
   && pip3 --disable-pip-version-check install -U --compile --no-cache-dir awscli s3cmd

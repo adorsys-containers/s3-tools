@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+docker run --rm "${DOCKER_IMAGE}:${TAG}" ps --version
 docker run --rm "${DOCKER_IMAGE}:${TAG}" curl --version
 
 docker run --rm "${DOCKER_IMAGE}:${TAG}" aws --version
